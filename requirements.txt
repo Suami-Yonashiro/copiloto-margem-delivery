@@ -1,0 +1,10 @@
+pandas
+numpy
+duckdb
+scipy
+statsmodels
+matplotlib
+streamlit
+jupyter
+python-dotenv
+anthropic
