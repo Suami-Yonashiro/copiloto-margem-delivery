@@ -1,4 +1,5 @@
 """Verifica se as bibliotecas do projeto estão instaladas."""
+
 import sys
 
 import duckdb

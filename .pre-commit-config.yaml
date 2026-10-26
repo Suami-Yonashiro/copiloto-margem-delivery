@@ -1,0 +1,9 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.0  # Você pode usar a versão mais recente compatível
+    hooks:
+      # Executa o linter do Ruff (encontra erros da PEP 8, unused imports, etc.) e corrige o que for seguro automaticamente
+      - id: ruff
+        args: [--fix]
+      # Executa o formatador do Ruff (substitui o Black, garantindo espaçamento e indentação perfeitos)
+      - id: ruff-format
