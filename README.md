@@ -20,10 +20,10 @@ Os agentes trabalham em um ciclo PDCA, sempre com uma pessoa aprovando as decis�
 
 ```mermaid
 flowchart LR
-    P["<b>1. Plan</b><br/>Agente de Experimentos<br/>propõe a hipótese"] -->|"aprovação<br/>humana"| D["<b>2. Do</b><br/>Experimento aplicado<br/>aos dados"]
-    D --> C["<b>3. Check</b><br/>Conciliação e análise<br/>estatística"]
-    C -->|"aprovação<br/>humana"| A["<b>4. Act</b><br/>Resumo executivo<br/>com recomendação"]
-    A -. próximo ciclo .-> P
+    P["<b>1. Plan</b><br/>Propor hipótese"] -->|aprovação| D["<b>2. Do</b><br/>Rodar experimento"]
+    D --> C["<b>3. Check</b><br/>Conciliar e analisar"]
+    C -->|aprovação| A["<b>4. Act</b><br/>Recomendar ação"]
+    A --> R(["↻ novo ciclo"])
 ```
 
 1. **Plan:** um agente propõe hipóteses e desenha experimentos.
