@@ -1,5 +1,4 @@
 # Copiloto de Margem para Delivery
-Copiloto de IA para margem e conciliação de restaurantes no delivery.
 
 Restaurantes que vendem por aplicativos de delivery costumam tomar decisões no escuro: não sabem se receberam o valor certo nos repasses nem se as promoções realmente dão lucro ou só aumentam o volume de pedidos.
 
@@ -48,4 +47,5 @@ Python · SQL (DuckDB) · pandas · SciPy e statsmodels · agentes de IA com LLM
 ## Autor
 
 **Suami Yonashiro** · Analista de Negócios
+
 [LinkedIn](https://www.linkedin.com/in/suami-yonashiro) · [GitHub](https://github.com/Suami-Yonashiro)
