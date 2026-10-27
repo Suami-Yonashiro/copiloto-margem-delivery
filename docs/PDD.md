@@ -23,23 +23,23 @@
 
 ```mermaid
 flowchart TD
-    subgraph DONO["\nDono(a)"]
+    subgraph DONO["<br/>Dono(a)"]
         E1["1. Decide entrar na promoção"]
     end
-    subgraph OPS["\nGerente de operações e equipe"]
+    subgraph OPS["<br/>Gerente de operações e equipe"]
         E2["2. Lança o pedido no PDV"]
         E3["3. Prepara e entrega"]
         E5["5. Fecha o caixa diário"]
         E11["11. Corrige a operação"]
     end
-    subgraph CLI["\nCliente"]
+    subgraph CLI["<br/>Cliente"]
         E4["4. Paga online ou na entrega"]
     end
-    subgraph PLAT["\nPlataforma e banco"]
+    subgraph PLAT["<br/>Plataforma e banco"]
         E7["7. Fecha o ciclo de 7 dias e desconta cobranças"]
         E8["8. Repasse cai na conta"]
     end
-    subgraph ADM["\nGerente administrativo(a)"]
+    subgraph ADM["<br/>Gerente administrativo(a)"]
         E6["6. Analisa reclamações e reembolsos"]
         E9["9. Confere repasse × vendas"]
         E10["10. Contesta divergências"]
