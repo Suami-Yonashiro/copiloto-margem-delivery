@@ -18,3 +18,38 @@
 | 9 | Confere repasse × vendas | Gerente administrativo(a) | Extrato + planilha | Conforme o plano de repasse | Manual, cerca de 4 dias intercalados com outras atividades |
 | 10 | Contesta divergências | Gerente administrativo(a) | Portal | Após a conferência | Prazo de 7 dias para contestar cancelamento pode já ter passado |
 | 11 | Corrige a operação no prazo definido | Gerente de operações | — | Após a contestação | Correção chega tarde |
+
+## Fluxo
+
+```mermaid
+flowchart TD
+    subgraph DONO["Dono(a)"]
+        E1["1. Decide entrar em promoção"]
+    end
+    subgraph OPS["Gerente de operações e equipe"]
+        E2["2. Lança o pedido no PDV"]
+        E3["3. Prepara e entrega"]
+        E5["5. Fecha o caixa diário"]
+        E11["11. Corrige a operação"]
+    end
+    subgraph CLI["Cliente"]
+        E4["4. Paga online ou na entrega"]
+    end
+    subgraph PLAT["Plataforma e banco"]
+        E7["7. Fecha o ciclo de 7 dias e desconta cobranças"]
+        E8["8. Repasse cai na conta"]
+    end
+    subgraph ADM["Gerente administrativo(a)"]
+        E6["6. Analisa reclamações e reembolsos"]
+        E9["9. Confere repasse × vendas"]
+        E10["10. Contesta divergências"]
+    end
+    E1 --> E2 --> E3 --> E4 --> E5
+    E5 --> E6
+    E4 --> E7 --> E8 --> E9
+    E6 --> E9
+    E9 -->|"divergência"| E10 --> E11
+    E9 -->|"bateu"| FIM(["Fim do ciclo"])
+    classDef dor fill:#fbebeb,stroke:#c0392b,color:#000
+    class E1,E2,E5,E9,E10 dor
+```
