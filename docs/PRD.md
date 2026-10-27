@@ -48,6 +48,7 @@ O copiloto mostra a margem e as divergências, mas a decisão final considera fa
 - Leitura automática do texto das reclamações com IA → V2
 
 ## 6. Métricas de sucesso
+- O prazo de detecção das divergências cai de semanas (fluxo atual) para até 1 dia após o repasse
 - O conciliador encontra 100% das divergências plantadas, com a causa correta, e não aponta divergência falsa nos pedidos pagos na entrega
 - A margem calculada pelo código bate com o cálculo manual de uma amostra de 20 pedidos
 - Cada recomendação do resumo semanal traz o valor em R$ e o dado que a sustenta
