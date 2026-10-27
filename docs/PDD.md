@@ -53,3 +53,11 @@ flowchart TD
     classDef dor fill:#fbebeb,stroke:#c0392b,color:#000
     class E1,E2,E5,E9,E10 dor
 ```
+
+## Pontos de dor
+1. **Conferência tardia:** a conferência acompanha o plano de repasse e leva cerca de 4 dias. Quando a divergência aparece, o prazo de 7 dias para contestar um cancelamento pode já ter passado.
+2. **Descontos sem rastreabilidade:** o repasse chega líquido e não mostra, pedido a pedido, o que foi descontado nem quem pagou cada promoção.
+3. **Lançamentos manuais:** o pedido é digitado no PDV e o caixa diário mistura meios de pagamento com regras diferentes, o que gera erros antes mesmo da conferência.
+
+## Como fica com o copiloto (TO-BE)
+O copiloto cruza vendas e repasses no dia em que o pagamento cai, aponta cada divergência com a causa e o prazo de contestação, e calcula a margem real de cada pedido e promoção. A pessoa continua decidindo: aprova as contestações, escolhe as promoções e define o prazo de correção com a equipe.
