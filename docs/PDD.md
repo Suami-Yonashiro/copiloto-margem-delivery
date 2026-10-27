@@ -23,8 +23,8 @@
 
 ```mermaid
 flowchart TD
-    subgraph DONO["Dono(a)"]
-        E1["1. Decide entrar em promoção"]
+    subgraph DONO["\nDono(a)"]
+        E1["1. Decide entrar na promoção"]
     end
     subgraph OPS["Gerente de operações e equipe"]
         E2["2. Lança o pedido no PDV"]
