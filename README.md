@@ -30,6 +30,13 @@ flowchart LR
 3. **Check:** um agente concilia pedidos e repasses e outro interpreta os resultados com estatística calculada pelo código.
 4. **Act:** um agente escreve um resumo executivo com a recomendação.
 
+## Documentação
+
+- [PRD](docs/PRD.md): problema, público, objetivos e escopo
+- [PDD](docs/PDD.md): fluxo atual, pontos de dor e como fica com o copiloto
+- [KPIs](docs/KPIs.md): margem de contribuição e indicadores de diagnóstico e proteção
+- [Ishikawa](docs/ishikawa.md): causas das divergências e como o projeto trata cada uma
+
 ## Tecnologias
 
 Python · SQL (DuckDB) · pandas · SciPy e statsmodels · agentes de IA com LLMs · Streamlit
@@ -37,7 +44,7 @@ Python · SQL (DuckDB) · pandas · SciPy e statsmodels · agentes de IA com LLM
 ## Roteiro
 
 - [x] Preparação do ambiente e estrutura do projeto
-- [ ] Definição do problema, KPIs e diagnóstico (Ishikawa)
+- [x] Definição do problema, KPIs e diagnóstico (Ishikawa)
 - [ ] Geração de dados fictícios
 - [ ] Conciliação de pedidos e repasses
 - [ ] Experimento A/B: desconto × frete grátis
