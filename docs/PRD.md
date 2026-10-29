@@ -21,7 +21,7 @@ O copiloto mostra a margem e as divergências, mas a decisão final considera fa
 
 ## 3. Objetivos
 1. Apontar divergências de repasse em até 1 dia após o pagamento, classificadas pela causa.
-2. Mostrar a margem de contribuição real de cada pedido e de cada promoção, considerando todas as taxas e a embalagem.
+2. Mostrar a margem de contribuição real de cada pedido e de cada promoção, considerando todas as taxas e o kit de envio.
 3. Dizer se uma promoção aumenta a margem total, com estatística calculada pelo código, antes de decidir repeti-la.
 4. Entregar um resumo semanal de uma página com até 3 recomendações, ordenadas pelo impacto em R$.
 5. Encontrar 100% das divergências plantadas nos dados fictícios, com a causa correta.
@@ -32,7 +32,7 @@ O copiloto mostra a margem e as divergências, mas a decisão final considera fa
 - Cobranças da plataforma: comissão, taxa de transação, mensalidade, taxa do plano de repasse e retenção de IRRF
 - Meios de pagamento online e na entrega, com entregador da plataforma ou próprio
 - Cancelamentos, reembolsos e reclamações, com motivo e responsável (restaurante ou plataforma)
-- Custos do restaurante: CMV por prato e embalagem (embalagem térmica, lacre e talheres)
+- Custos do restaurante: CMV por prato e kit de envio (sacola, lacres, talheres, guardanapo e sachê de álcool em gel)
 - Conciliação pedido a pedido, com a causa de cada divergência
 - Um teste A/B: desconto × frete grátis
 - Dois agentes de IA (Conciliador e Analista), com aprovação humana

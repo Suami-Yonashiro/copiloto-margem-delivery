@@ -20,8 +20,8 @@ Valor de venda do pedido (preço no app)
 − Desconto da promoção pago pelo restaurante
 − Comissão da plataforma
 − Taxa de pagamento:
-online → taxa de transação da plataforma
-na entrega → taxa da maquininha, por bandeira e modalidade
+    online → taxa de transação da plataforma
+    na entrega → taxa da maquininha, por bandeira e modalidade
 − Taxa do plano de repasse
 − Frete pago pelo restaurante (quando houver)
 − CMV
