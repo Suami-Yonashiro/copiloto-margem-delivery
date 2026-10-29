@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="860" viewBox="0 0 1720 860" font-family="Arial, Helvetica, sans-serif">
+<rect width="1720" height="860" fill="#ffffff"/>
+<defs><marker id="seta" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#3a3a3a"/></marker></defs>
+<line x1="70" y1="430.0" x2="1390" y2="430.0" stroke="#3a3a3a" stroke-width="4" marker-end="url(#seta)"/>
+<rect x="1404" y="355.0" width="270" height="150" rx="18" fill="#fbebeb" stroke="#c0392b" stroke-width="2.5"/>
+<text x="1539.0" y="392.0" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b" letter-spacing="2">EFEITO</text>
+<text x="1539.0" y="424.0" text-anchor="middle" font-size="19" font-weight="bold" fill="#1f1f1f">Repasse divergente</text>
+<text x="1539.0" y="448.0" text-anchor="middle" font-size="19" font-weight="bold" fill="#1f1f1f">descoberto tarde, com</text>
+<text x="1539.0" y="472.0" text-anchor="middle" font-size="19" font-weight="bold" fill="#1f1f1f">margem corroída</text>
+<line x1="280" y1="95" x2="580" y2="430.0" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="205.0" y="55" width="150" height="40" rx="6" fill="#f0efec" stroke="#555" stroke-width="1.5"/>
+<text x="280" y="81" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f1f1f">Método</text>
+<line x1="294.0" y1="148.6" x2="328.0" y2="148.6" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="286.0" y="145.1" text-anchor="end" font-size="14" fill="#1f1f1f">Conferência segue o repasse,</text>
+<text x="286.0" y="162.1" text-anchor="end" font-size="14" fill="#1f1f1f">não o prazo de contestação</text>
+<line x1="387.0" y1="252.45" x2="421.0" y2="252.45" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="379.0" y="248.95" text-anchor="end" font-size="14" fill="#1f1f1f">Promoção sem projeção de margem</text>
+<text x="379.0" y="265.95" text-anchor="end" font-size="14" fill="#1f1f1f">nem de quem paga o desconto</text>
+<line x1="480.0" y1="356.3" x2="514.0" y2="356.3" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="472.0" y="352.8" text-anchor="end" font-size="14" fill="#1f1f1f">Ficha técnica sem</text>
+<text x="472.0" y="369.8" text-anchor="end" font-size="14" fill="#1f1f1f">o kit de envio</text>
+<line x1="710" y1="95" x2="1010" y2="430.0" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="635.0" y="55" width="150" height="40" rx="6" fill="#f0efec" stroke="#555" stroke-width="1.5"/>
+<text x="710" y="81" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f1f1f">Sistemas</text>
+<line x1="724.0" y1="148.6" x2="758.0" y2="148.6" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="716.0" y="145.1" text-anchor="end" font-size="14" fill="#1f1f1f">PDV não conversa com o gestor</text>
+<text x="716.0" y="162.1" text-anchor="end" font-size="14" fill="#1f1f1f">de pedidos; lançamento manual</text>
+<line x1="910.0" y1="356.3" x2="944.0" y2="356.3" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="902.0" y="352.8" text-anchor="end" font-size="14" fill="#1f1f1f">Extrato sem detalhe</text>
+<text x="902.0" y="369.8" text-anchor="end" font-size="14" fill="#1f1f1f">que bata com o PDV</text>
+<line x1="1050" y1="95" x2="1350" y2="430.0" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="975.0" y="55" width="150" height="40" rx="6" fill="#f0efec" stroke="#555" stroke-width="1.5"/>
+<text x="1050" y="81" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f1f1f">Pessoas</text>
+<line x1="1064.0" y1="148.6" x2="1098.0" y2="148.6" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="1056.0" y="145.1" text-anchor="end" font-size="14" fill="#1f1f1f">Sem tempo para conferir pedido</text>
+<text x="1056.0" y="162.1" text-anchor="end" font-size="14" fill="#1f1f1f">a pedido (cerca de 4 dias)</text>
+<line x1="1157.0" y1="252.45" x2="1191.0" y2="252.45" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="1149.0" y="248.95" text-anchor="end" font-size="14" fill="#1f1f1f">Erros de digitação ou falta de</text>
+<text x="1149.0" y="265.95" text-anchor="end" font-size="14" fill="#1f1f1f">preenchimento nos lançamentos</text>
+<line x1="1250.0" y1="356.3" x2="1284.0" y2="356.3" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="1242.0" y="352.8" text-anchor="end" font-size="14" fill="#1f1f1f">Regras conhecidas só por quem</text>
+<text x="1242.0" y="369.8" text-anchor="end" font-size="14" fill="#1f1f1f">confere, sem documentação</text>
+<line x1="280" y1="765" x2="580" y2="430.0" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="205.0" y="765" width="150" height="40" rx="6" fill="#f0efec" stroke="#555" stroke-width="1.5"/>
+<text x="280" y="791" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f1f1f">Dados</text>
+<line x1="294.0" y1="711.4" x2="328.0" y2="711.4" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="286.0" y="707.9" text-anchor="end" font-size="14" fill="#1f1f1f">Repasse líquido, sem mostrar</text>
+<text x="286.0" y="724.9" text-anchor="end" font-size="14" fill="#1f1f1f">quem pagou a promoção</text>
+<line x1="356.0" y1="642.1666666666666" x2="390.0" y2="642.1666666666666" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="348.0" y="638.6666666666666" text-anchor="end" font-size="14" fill="#1f1f1f">Cobrança ou comissão</text>
+<text x="348.0" y="655.6666666666666" text-anchor="end" font-size="14" fill="#1f1f1f">diferente da contratada</text>
+<line x1="418.0" y1="572.9333333333334" x2="452.0" y2="572.9333333333334" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="410.0" y="569.4333333333334" text-anchor="end" font-size="14" fill="#1f1f1f">Reembolso debitado sem ser</text>
+<text x="410.0" y="586.4333333333334" text-anchor="end" font-size="14" fill="#1f1f1f">responsabilidade do restaurante</text>
+<line x1="480.0" y1="503.7" x2="514.0" y2="503.7" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="472.0" y="500.2" text-anchor="end" font-size="14" fill="#1f1f1f">Meios de pagamento com</text>
+<text x="472.0" y="517.2" text-anchor="end" font-size="14" fill="#1f1f1f">regras diferentes misturados</text>
+<line x1="710" y1="765" x2="1010" y2="430.0" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="635.0" y="765" width="150" height="40" rx="6" fill="#f0efec" stroke="#555" stroke-width="1.5"/>
+<text x="710" y="791" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f1f1f">Medição</text>
+<line x1="724.0" y1="711.4" x2="758.0" y2="711.4" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="716.0" y="707.9" text-anchor="end" font-size="14" fill="#1f1f1f">Margem real do pedido e</text>
+<text x="716.0" y="724.9" text-anchor="end" font-size="14" fill="#1f1f1f">da promoção não calculada</text>
+<line x1="910.0" y1="503.7" x2="944.0" y2="503.7" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="902.0" y="500.2" text-anchor="end" font-size="14" fill="#1f1f1f">Sem indicador de divergência</text>
+<text x="902.0" y="517.2" text-anchor="end" font-size="14" fill="#1f1f1f">nem de valor perdido por prazo</text>
+<line x1="1050" y1="765" x2="1350" y2="430.0" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="975.0" y="765" width="150" height="40" rx="6" fill="#f0efec" stroke="#555" stroke-width="1.5"/>
+<text x="1050" y="791" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f1f1f">Ambiente</text>
+<line x1="1064.0" y1="711.4" x2="1098.0" y2="711.4" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="1056.0" y="707.9" text-anchor="end" font-size="14" fill="#1f1f1f">Inflação muda o CMV mais rápido</text>
+<text x="1056.0" y="724.9" text-anchor="end" font-size="14" fill="#1f1f1f">que o preço no app (fora da V1)</text>
+<line x1="1157.0" y1="607.55" x2="1191.0" y2="607.55" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="1149.0" y="604.05" text-anchor="end" font-size="14" fill="#1f1f1f">Pressão por resultados empurra</text>
+<text x="1149.0" y="621.05" text-anchor="end" font-size="14" fill="#1f1f1f">para campanhas de volume</text>
+<line x1="1250.0" y1="503.7" x2="1284.0" y2="503.7" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="1242.0" y="500.2" text-anchor="end" font-size="14" fill="#1f1f1f">Prazo de contestação curto,</text>
+<text x="1242.0" y="517.2" text-anchor="end" font-size="14" fill="#1f1f1f">definido pela plataforma</text>
+</svg>
