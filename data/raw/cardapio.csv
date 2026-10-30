@@ -1,0 +1,16 @@
+item_id,nome,categoria,plataforma,preco_salao,preco_app,cmv
+P01,Frango grelhado com arroz e salada,prato,plataforma_a,38.9,45.9,11.67
+P02,Filé de tilápia com legumes,prato,plataforma_a,46.9,53.9,15.95
+P03,Estrogonofe de carne,prato,plataforma_a,42.9,50.9,14.16
+P04,Parmegiana de frango,prato,plataforma_a,44.9,52.9,13.92
+P05,Risoto de cogumelos,prato,plataforma_a,49.9,54.9,14.47
+P06,Feijoada individual,prato,plataforma_a,39.9,47.9,12.77
+P07,Salada caesar com frango,prato,plataforma_a,34.9,40.9,9.77
+P08,Hambúrguer artesanal com fritas,lanche,plataforma_a,36.9,43.9,12.92
+P09,Wrap de frango,lanche,plataforma_a,29.9,32.9,8.97
+P10,Porção de batata frita,acompanhamento,plataforma_a,22.9,25.9,5.04
+P11,Pudim de leite,sobremesa,plataforma_a,14.9,16.9,3.72
+P12,Brownie com sorvete,sobremesa,plataforma_a,18.9,22.9,5.67
+P13,Refrigerante lata,bebida,plataforma_a,7.9,8.9,3.56
+P14,Suco natural 500 ml,bebida,plataforma_a,11.9,13.9,4.16
+P15,Água mineral,bebida,plataforma_a,5.9,6.9,2.36
