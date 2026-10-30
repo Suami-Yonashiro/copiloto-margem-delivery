@@ -23,6 +23,6 @@ Cada causa tratada pelo projeto vira um erro plantado nos dados fictícios, uma 
 | Prazo de contestação curto, definido pela plataforma | Cancelamentos no início do ciclo de repasse | Prazo de contestação por divergência e alerta `PRAZO_PROXIMO` (Módulo 4) |
 | Margem real não calculada; ficha técnica sem o kit de envio | — | Cálculo da margem com todas as taxas e o kit de envio (Módulo 3) |
 | Promoção sem projeção de margem; pressão por campanhas de volume | — | Teste A/B desconto × frete grátis (Módulo 5) |
-| Conferência segue o repasse; sem tempo; sem indicador | — | Conciliação no dia do repasse e painel de KPIs (Módulos 4 e 8) |
+| Conferência segue o repasse; sem tempo; sem indicador | — | Conciliação diária pelo extrato de pedidos e painel de KPIs (Módulos 4 e 8) |
 | Regras conhecidas só por quem confere | — | Regras de cobrança em arquivo de configuração (Módulo 2) |
 | Inflação muda o CMV mais rápido que o preço no app | — | Fora da V1 |

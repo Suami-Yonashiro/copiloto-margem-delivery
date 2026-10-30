@@ -60,4 +60,4 @@ flowchart TD
 3. **Lançamentos manuais:** o pedido é digitado no PDV e o caixa diário mistura meios de pagamento com regras diferentes, o que gera erros antes mesmo da conferência.
 
 ## Como fica com o copiloto (TO-BE)
-O copiloto cruza vendas e repasses no dia em que o pagamento cai, aponta cada divergência com a causa e o prazo de contestação, e calcula a margem real de cada pedido e promoção. A pessoa continua decidindo: aprova as contestações, escolhe as promoções e define o prazo de correção com a equipe.
+O copiloto cruza todo dia as vendas do PDV com o extrato de pedidos da plataforma, sem esperar o repasse, aponta cada divergência com a causa e o prazo de contestação, e calcula a margem real de cada pedido e promoção. A pessoa continua decidindo: aprova as contestações, escolhe as promoções e define o prazo de correção com a equipe.

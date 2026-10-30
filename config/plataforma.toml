@@ -1,0 +1,39 @@
+# Regras de cobrança da plataforma fictícia.
+# Valores inspirados no mercado, mas NÃO são percentuais oficiais de nenhuma empresa.
+# O gerador de dados (Módulo 2) e o conciliador (Módulo 4) leem este mesmo arquivo.
+
+[plataforma]
+nome = "plataforma_a"
+
+[comissao]
+# % sobre o valor dos itens, por modelo de entrega
+entrega_plataforma = 0.23   # a plataforma entrega
+entrega_propria = 0.12      # o restaurante entrega
+
+[taxa_transacao]
+# % cobrado só em pedidos pagos online no app
+pagamento_online = 0.032
+
+[mensalidade]
+# valor fixo mensal; rateado só na margem semanal, nunca no pedido
+valor = 150.00
+# isenta no mês em que o faturamento bruto na plataforma não passar deste valor
+isencao_faturamento_ate = 1800.00
+
+[plano_repasse]
+# taxa sobre as vendas online, conforme a frequência do repasse
+mensal = 0.0
+semanal = 0.0149            # antecipação; no mercado gira entre 1,49% e 1,59%
+base = "vendas_online"
+plano_atual = "mensal"
+
+[contestacao]
+# prazos contados a partir da data do cancelamento, em dias corridos
+prazo_cancelamento_dias = 7
+alerta_prazo_proximo_dias = 2
+# tempo médio de análise da plataforma depois de aberta a contestação
+analise_plataforma_horas = 72
+
+[irrf]
+# retenção sobre a comissão; é imposto antecipado, não custo
+aliquota = 0.015

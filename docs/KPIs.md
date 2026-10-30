@@ -35,8 +35,8 @@ Ficam fora da margem do pedido: a mensalidade da plataforma (custo fixo, entra s
 ## Diagnóstico
 | KPI | Fórmula | Frequência | Meta |
 |---|---|---|---|
-| Taxa de divergência de repasse | Pedidos com diferença acima de R$ 0,01 entre o recebido e o esperado ÷ pedidos com repasse | Por repasse | Abaixo de 2% |
-| Valor a recuperar (R$) | Soma de (esperado − recebido) nos pedidos pagos a menor e ainda dentro do prazo de contestação | Por repasse | Zerar a cada ciclo |
+| Taxa de divergência de repasse | Pedidos com diferença acima de R$ 0,01 entre o recebido e o esperado ÷ pedidos com repasse | Diária | Abaixo de 2% |
+| Valor a recuperar (R$) | Soma de (esperado − recebido) nos pedidos pagos a menor e ainda dentro do prazo de contestação | Diária | Zerar a cada ciclo |
 | Valor perdido por prazo (R$) | Soma das divergências não contestadas dentro do prazo | Mensal | R$ 0 |
 | Custo efetivo da plataforma (%) | (Comissão + taxa de transação + taxa do plano de repasse + mensalidade) ÷ valor de venda | Mensal | Linha de base |
 | Custo das promoções pago pelo restaurante (R$) | Soma dos descontos bancados pelo restaurante | Por campanha | Linha de base |

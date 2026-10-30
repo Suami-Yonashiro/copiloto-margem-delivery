@@ -20,7 +20,7 @@ No restaurante, as decisões sobre o delivery envolvem três papéis, cada um co
 O copiloto mostra a margem e as divergências, mas a decisão final considera fatores que não estão nos dados, como a qualidade do produto e o posicionamento da marca. Por isso, toda ação passa por aprovação humana.
 
 ## 3. Objetivos
-1. Apontar divergências de repasse em até 1 dia após o pagamento, classificadas pela causa.
+1. Apontar divergências de repasse em até 1 dia após o pedido aparecer no extrato da plataforma, sem esperar o repasse, classificadas pela causa.
 2. Mostrar a margem de contribuição real de cada pedido e de cada promoção, considerando todas as taxas e o kit de envio.
 3. Dizer se uma promoção aumenta a margem total, com estatística calculada pelo código, antes de decidir repeti-la.
 4. Entregar um resumo semanal de uma página com até 3 recomendações, ordenadas pelo impacto em R$.
@@ -48,7 +48,7 @@ O copiloto mostra a margem e as divergências, mas a decisão final considera fa
 - Leitura automática do texto das reclamações com IA → V2
 
 ## 6. Métricas de sucesso
-- O prazo de detecção das divergências cai de semanas (fluxo atual) para até 1 dia após o repasse
+- O prazo de detecção das divergências cai de semanas (fluxo atual) para até 1 dia após o pedido, em qualquer plano de repasse.
 - O conciliador encontra 100% das divergências plantadas, com a causa correta, e não aponta divergência falsa nos pedidos pagos na entrega
 - A margem calculada pelo código bate com o cálculo manual de uma amostra de 20 pedidos
 - Cada recomendação do resumo semanal traz o valor em R$ e o dado que a sustenta
