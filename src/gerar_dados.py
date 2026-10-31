@@ -13,6 +13,9 @@ import pandas as pd
 RAIZ = Path(__file__).resolve().parent.parent
 PASTA_SAIDA = RAIZ / "data" / "raw"
 SEMENTE = 42
+DATA_INICIO = "2026-07-01"
+DATA_FIM = "2026-09-30"
+PEDIDOS_POR_DIA = 55  # média de segunda a quinta; sexta a domingo vende 30% mais
 
 with open(RAIZ / "config" / "plataforma.toml", "rb") as arquivo:
     CONFIG = tomllib.load(arquivo)
@@ -108,6 +111,162 @@ def gerar_taxas_maquininha() -> pd.DataFrame:
     return pd.DataFrame(TAXAS_MAQUININHA, columns=["meio", "bandeira", "taxa"])
 
 
+def sortear_horario(rng: np.random.Generator, dia: pd.Timestamp) -> pd.Timestamp:
+    """Horário do pedido: pico do almoço (55%) ou do jantar (45%)."""
+    if rng.random() < 0.55:
+        hora = rng.normal(12.5, 0.8)
+    else:
+        hora = rng.normal(20.0, 1.1)
+    hora = float(np.clip(hora, 10.5, 23.5))
+    return dia + pd.Timedelta(hours=hora)
+
+
+def gerar_pedidos_pdv(
+    rng: np.random.Generator, cardapio: pd.DataFrame, taxas: pd.DataFrame
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Pedidos registrados no PDV do restaurante e os itens de cada pedido.
+
+    O PDV é a fonte do restaurante: aqui não há erros plantados. Os erros
+    entram depois, no extrato da plataforma.
+    """
+    # Pratos e lanches saem mais que bebidas, sobremesas e acompanhamentos
+    peso_categoria = {
+        "prato": 5,
+        "lanche": 3,
+        "acompanhamento": 1,
+        "sobremesa": 1,
+        "bebida": 2,
+    }
+    pesos_itens = cardapio["categoria"].map(peso_categoria).to_numpy(dtype=float)
+    pesos_itens = pesos_itens / pesos_itens.sum()
+
+    # Meios de pagamento na entrega (pix e cartões são os mais usados)
+    peso_meio = {"dinheiro": 1, "pix": 3, "débito": 2, "crédito": 2, "vale-refeição": 1}
+    contagem_meio = taxas["meio"].map(taxas["meio"].value_counts())
+    pesos_meios = (taxas["meio"].map(peso_meio) / contagem_meio).to_numpy(dtype=float)
+    pesos_meios = pesos_meios / pesos_meios.sum()
+
+    pedidos, itens = [], []
+    numero = 0
+    for dia in pd.date_range(DATA_INICIO, DATA_FIM, freq="D"):
+        fator = 1.3 if dia.dayofweek >= 4 else 1.0  # sexta, sábado e domingo
+        for _ in range(rng.poisson(PEDIDOS_POR_DIA * fator)):
+            numero += 1
+            pedido_id = f"PDV{numero:06d}"
+            data_hora = sortear_horario(rng, dia)
+
+            # Entrega: pela plataforma (70%) ou pelo entregador do restaurante (30%)
+            modelo = rng.choice(["plataforma", "propria"], p=[0.7, 0.3])
+
+            # Pagamento na entrega só existe com entregador próprio
+            if modelo == "propria" and rng.random() < 0.4:
+                forma = "entrega"
+                linha = taxas.iloc[rng.choice(len(taxas), p=pesos_meios)]
+                meio, bandeira = linha["meio"], linha["bandeira"]
+            else:
+                forma, meio, bandeira = "online", "online", "-"
+
+            # Itens do pedido
+            qtd_itens = rng.choice([1, 2, 3], p=[0.5, 0.35, 0.15])
+            escolhidos = rng.choice(
+                len(cardapio), size=qtd_itens, replace=False, p=pesos_itens
+            )
+            valor_itens = 0.0
+            for i in escolhidos:
+                qtd = int(rng.choice([1, 2], p=[0.9, 0.1]))
+                preco = float(cardapio.iloc[i]["preco_app"])
+                itens.append(
+                    {
+                        "pedido_id": pedido_id,
+                        "item_id": cardapio.iloc[i]["item_id"],
+                        "quantidade": qtd,
+                        "preco_unitario": preco,
+                    }
+                )
+                valor_itens += qtd * preco
+
+            # Frete cobrado do cliente: só na entrega própria fica com o restaurante
+            frete = (
+                float(rng.choice([5.99, 6.99, 7.99])) if modelo == "propria" else 0.0
+            )
+
+            # Promoções: 18% dos pedidos
+            tipo_promo, valor_promo, custeado_por = "nenhuma", 0.0, "-"
+            if rng.random() < 0.18:
+                tipo_promo = rng.choice(
+                    ["cupom_loja", "cupom_plataforma", "frete_gratis"],
+                    p=[0.4, 0.3, 0.3],
+                )
+                if tipo_promo == "frete_gratis":
+                    valor_promo = frete if frete > 0 else 6.99  # a loja banca o frete
+                    frete = 0.0
+                    custeado_por = "loja"
+                else:
+                    valor_promo = round(min(valor_itens * 0.10, 15.0), 2)
+                    custeado_por = (
+                        "loja" if tipo_promo == "cupom_loja" else "plataforma"
+                    )
+
+            desconto_cliente = valor_promo if tipo_promo.startswith("cupom") else 0.0
+            total_cliente = round(valor_itens + frete - desconto_cliente, 2)
+
+            # Cancelamentos: 4% dos pedidos, entre 5 e 40 minutos depois
+            status, cancelado_por, data_cancelamento = "concluido", "-", pd.NaT
+            if rng.random() < 0.04:
+                status = "cancelado"
+                cancelado_por = rng.choice(
+                    ["cliente", "loja", "plataforma"], p=[0.5, 0.3, 0.2]
+                )
+                data_cancelamento = data_hora + pd.Timedelta(
+                    minutes=int(rng.integers(5, 41))
+                )
+
+            # Custo de recuperação: brinde ou frete por erro em 2% dos pedidos concluídos
+            recuperacao = 0.0
+            if status == "concluido" and rng.random() < 0.02:
+                recuperacao = float(rng.choice([6.00, 8.00, 12.00]))
+
+            pedidos.append(
+                {
+                    "pedido_id": pedido_id,
+                    "plataforma": CONFIG["plataforma"]["nome"],
+                    "data_hora_pedido": data_hora.floor("min"),
+                    "modelo_entrega": modelo,
+                    "forma_pagamento": forma,
+                    "meio_pagamento": meio,
+                    "bandeira": bandeira,
+                    "valor_itens": round(valor_itens, 2),
+                    "frete_cliente": frete,
+                    "tipo_promocao": tipo_promo,
+                    "valor_promocao": valor_promo,
+                    "custeado_por": custeado_por,
+                    "total_cliente": total_cliente,
+                    "status": status,
+                    "cancelado_por": cancelado_por,
+                    "data_hora_cancelamento": data_cancelamento,
+                    "custo_recuperacao": recuperacao,
+                }
+            )
+
+    pedidos = pd.DataFrame(pedidos)
+    itens = pd.DataFrame(itens)
+    pedidos["data_hora_cancelamento"] = pedidos["data_hora_cancelamento"].dt.floor(
+        "min"
+    )
+
+    # Renumera em ordem cronológica, como um PDV de verdade faria
+    pedidos = pedidos.sort_values("data_hora_pedido", kind="stable").reset_index(
+        drop=True
+    )
+    novo_id = {
+        antigo: f"PDV{i:06d}" for i, antigo in enumerate(pedidos["pedido_id"], start=1)
+    }
+    pedidos["pedido_id"] = pedidos["pedido_id"].map(novo_id)
+    itens["pedido_id"] = itens["pedido_id"].map(novo_id)
+    itens = itens.sort_values("pedido_id", kind="stable").reset_index(drop=True)
+    return pedidos, itens
+
+
 def main() -> None:
     rng = np.random.default_rng(SEMENTE)
     PASTA_SAIDA.mkdir(parents=True, exist_ok=True)
@@ -127,6 +286,13 @@ def main() -> None:
     taxas = gerar_taxas_maquininha()
     taxas.to_csv(PASTA_SAIDA / "taxas_maquininha.csv", index=False)
     print(f"taxas_maquininha.csv: {len(taxas)} combinações de meio e bandeira")
+
+    pedidos, itens = gerar_pedidos_pdv(rng, cardapio, taxas)
+    pedidos.to_csv(PASTA_SAIDA / "pdv_pedidos.csv", index=False)
+    itens.to_csv(PASTA_SAIDA / "pdv_itens.csv", index=False)
+    print(f"pdv_pedidos.csv: {len(pedidos)} pedidos de {DATA_INICIO} a {DATA_FIM}")
+    print(f"pdv_itens.csv: {len(itens)} linhas de itens")
+    print(f"Ticket médio: R$ {pedidos['total_cliente'].mean():.2f}")
 
 
 if __name__ == "__main__":
