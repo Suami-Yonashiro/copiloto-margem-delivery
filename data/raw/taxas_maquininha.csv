@@ -1,0 +1,11 @@
+meio,bandeira,taxa
+dinheiro,-,0.0
+pix,-,0.0106
+débito,visa,0.0177
+débito,mastercard,0.0177
+débito,elo,0.0199
+crédito,visa,0.0362
+crédito,mastercard,0.0362
+crédito,elo,0.0389
+crédito,amex,0.0429
+vale-refeição,-,0.0618
