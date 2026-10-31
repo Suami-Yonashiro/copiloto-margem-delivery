@@ -267,6 +267,204 @@ def gerar_pedidos_pdv(
     return pedidos, itens
 
 
+def data_repasse(data_pedido: pd.Timestamp) -> pd.Timestamp:
+    """Data prevista do repasse conforme o plano escolhido no config."""
+    if CONFIG["plano_repasse"]["plano_atual"] == "semanal":
+        return (data_pedido + pd.offsets.Week(weekday=2)).normalize()  # quarta seguinte
+    return (data_pedido + pd.offsets.MonthBegin(1)).normalize() + pd.Timedelta(days=4)
+
+
+def lancamento_correto(pedido: pd.Series) -> dict:
+    """Valores que a plataforma deveria lançar para o pedido, pelas regras do config."""
+    c = CONFIG
+    online = pedido["forma_pagamento"] == "online"
+    chave = (
+        "entrega_plataforma"
+        if pedido["modelo_entrega"] == "plataforma"
+        else "entrega_propria"
+    )
+    comissao_pct = c["comissao"][chave]
+
+    # Cancelado pelo cliente ou pela loja: nada a receber nem a pagar
+    if pedido["status"] == "cancelado" and pedido["cancelado_por"] != "plataforma":
+        return {
+            "comissao_pct": comissao_pct,
+            "comissao": 0.0,
+            "taxa_transacao": 0.0,
+            "promocao_debitada": 0.0,
+            "frete_repassado": 0.0,
+            "taxa_plano": 0.0,
+            "irrf": 0.0,
+            "valor_liquido": 0.0,
+        }
+
+    comissao = round(pedido["valor_itens"] * comissao_pct, 2)
+    irrf = round(comissao * c["irrf"]["aliquota"], 2)
+
+    if not online:
+        # Pago na entrega: o dinheiro fica com a loja; a plataforma só debita a comissão
+        return {
+            "comissao_pct": comissao_pct,
+            "comissao": comissao,
+            "taxa_transacao": 0.0,
+            "promocao_debitada": 0.0,
+            "frete_repassado": 0.0,
+            "taxa_plano": 0.0,
+            "irrf": irrf,
+            "valor_liquido": round(-comissao - irrf, 2),
+        }
+
+    taxa_transacao = round(
+        pedido["total_cliente"] * c["taxa_transacao"]["pagamento_online"], 2
+    )
+    plano = c["plano_repasse"]
+    taxa_plano = round(pedido["total_cliente"] * plano[plano["plano_atual"]], 2)
+
+    # A plataforma só desconta da loja o que a loja custeou
+    promocao = 0.0
+    if pedido["tipo_promocao"] == "cupom_loja":
+        promocao = pedido["valor_promocao"]
+    elif (
+        pedido["tipo_promocao"] == "frete_gratis"
+        and pedido["modelo_entrega"] == "plataforma"
+    ):
+        promocao = pedido["valor_promocao"]
+
+    frete = pedido["frete_cliente"]  # na entrega própria o frete é da loja
+    liquido = (
+        pedido["valor_itens"]
+        + frete
+        - comissao
+        - taxa_transacao
+        - promocao
+        - taxa_plano
+        - irrf
+    )
+    return {
+        "comissao_pct": comissao_pct,
+        "comissao": comissao,
+        "taxa_transacao": taxa_transacao,
+        "promocao_debitada": promocao,
+        "frete_repassado": frete,
+        "taxa_plano": taxa_plano,
+        "irrf": irrf,
+        "valor_liquido": round(liquido, 2),
+    }
+
+
+def gerar_extrato(
+    rng: np.random.Generator, pedidos: pd.DataFrame
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Extrato da plataforma, com erros plantados, e o gabarito desses erros.
+
+    O gabarito existe só para testar o conciliador (Módulo 4): o conciliador
+    nunca pode lê-lo para encontrar as divergências.
+    """
+    extrato, gabarito = [], []
+    for _, pedido in pedidos.iterrows():
+        correto = lancamento_correto(pedido)
+        lanc = dict(correto)
+        valor_itens = pedido["valor_itens"]
+        erro = None
+        online = pedido["forma_pagamento"] == "online"
+        concluido = pedido["status"] == "concluido"
+        sorteio = rng.random()
+
+        # Pagamento na entrega fica fora dos erros: é a exceção que não pode virar divergência
+        if online and concluido and sorteio < 0.005:
+            erro = "REPASSE_AUSENTE"  # pedido entregue que some do extrato
+        elif online and concluido and sorteio < 0.020:
+            erro = "COMISSAO_INCORRETA"
+            if pedido["modelo_entrega"] == "propria":
+                lanc["comissao_pct"] = CONFIG["comissao"][
+                    "entrega_plataforma"
+                ]  # % do outro modelo
+            else:
+                lanc["comissao_pct"] = round(lanc["comissao_pct"] + 0.02, 4)
+        elif online and concluido and sorteio < 0.030 and valor_itens > 20:
+            erro = "LANCAMENTO_DIVERGENTE"
+            valor_itens = round(valor_itens - float(rng.choice([5.90, 7.90, 11.90])), 2)
+        elif (
+            pedido["tipo_promocao"] == "cupom_plataforma"
+            and online
+            and concluido
+            and sorteio < 0.25
+        ):
+            erro = "PROMOCAO_INDEVIDA"  # cupom da plataforma cobrado da loja
+            lanc["promocao_debitada"] = pedido["valor_promocao"]
+        elif pedido["cancelado_por"] == "plataforma" and online and sorteio < 0.60:
+            erro = "REEMBOLSO_INDEVIDO"  # plataforma cancelou e não pagou a loja
+            lanc.update(
+                {
+                    "comissao": 0.0,
+                    "taxa_transacao": 0.0,
+                    "promocao_debitada": 0.0,
+                    "frete_repassado": 0.0,
+                    "taxa_plano": 0.0,
+                    "irrf": 0.0,
+                }
+            )
+
+        if erro in ("COMISSAO_INCORRETA", "LANCAMENTO_DIVERGENTE"):
+            lanc["comissao"] = round(valor_itens * lanc["comissao_pct"], 2)
+            lanc["irrf"] = round(lanc["comissao"] * CONFIG["irrf"]["aliquota"], 2)
+        if erro in (
+            "COMISSAO_INCORRETA",
+            "LANCAMENTO_DIVERGENTE",
+            "PROMOCAO_INDEVIDA",
+            "REEMBOLSO_INDEVIDO",
+        ):
+            lanc["valor_liquido"] = (
+                0.0
+                if erro == "REEMBOLSO_INDEVIDO"
+                else round(
+                    valor_itens
+                    + lanc["frete_repassado"]
+                    - lanc["comissao"]
+                    - lanc["taxa_transacao"]
+                    - lanc["promocao_debitada"]
+                    - lanc["taxa_plano"]
+                    - lanc["irrf"],
+                    2,
+                )
+            )
+
+        if erro:
+            gabarito.append(
+                {
+                    "pedido_id": pedido["pedido_id"],
+                    "tipo_erro": erro,
+                    "valor_esperado": correto["valor_liquido"],
+                    "valor_extrato": None
+                    if erro == "REPASSE_AUSENTE"
+                    else lanc["valor_liquido"],
+                }
+            )
+        if erro == "REPASSE_AUSENTE":
+            continue
+
+        data_pedido = pedido["data_hora_pedido"]
+        extrato.append(
+            {
+                "pedido_id": pedido["pedido_id"],
+                "plataforma": pedido["plataforma"],
+                "data_hora_pedido": data_pedido,
+                "data_extrato": (data_pedido + pd.Timedelta(days=1)).normalize(),
+                "status": pedido["status"],
+                "data_hora_cancelamento": pedido["data_hora_cancelamento"],
+                "modelo_entrega": pedido["modelo_entrega"],
+                "forma_pagamento": pedido["forma_pagamento"],
+                "valor_itens": valor_itens,
+                **lanc,
+                "data_repasse_prevista": data_repasse(data_pedido)
+                if online
+                else pd.NaT,
+            }
+        )
+
+    return pd.DataFrame(extrato), pd.DataFrame(gabarito)
+
+
 def main() -> None:
     rng = np.random.default_rng(SEMENTE)
     PASTA_SAIDA.mkdir(parents=True, exist_ok=True)
@@ -293,6 +491,13 @@ def main() -> None:
     print(f"pdv_pedidos.csv: {len(pedidos)} pedidos de {DATA_INICIO} a {DATA_FIM}")
     print(f"pdv_itens.csv: {len(itens)} linhas de itens")
     print(f"Ticket médio: R$ {pedidos['total_cliente'].mean():.2f}")
+
+    extrato, gabarito = gerar_extrato(rng, pedidos)
+    extrato.to_csv(PASTA_SAIDA / "extrato_plataforma.csv", index=False)
+    gabarito.to_csv(PASTA_SAIDA / "gabarito_erros.csv", index=False)
+    print(f"extrato_plataforma.csv: {len(extrato)} lançamentos")
+    print(f"gabarito_erros.csv: {len(gabarito)} erros plantados")
+    print(gabarito["tipo_erro"].value_counts().to_string())
 
 
 if __name__ == "__main__":
