@@ -36,6 +36,7 @@ flowchart LR
 - [PDD](docs/PDD.md): fluxo atual, pontos de dor e como fica com o copiloto
 - [KPIs](docs/KPIs.md): margem de contribuição e indicadores de diagnóstico e proteção
 - [Ishikawa](docs/ishikawa.md): causas das divergências e como o projeto trata cada uma
+- [Dicionário de dados](docs/dados.md): tabelas fictícias, colunas e como se ligam
 
 ## Tecnologias
 
